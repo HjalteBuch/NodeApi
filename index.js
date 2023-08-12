@@ -4,13 +4,15 @@ const express = require('express');
 const repo = require('./repositories/product-file');
 // Create an instance of express
 const app = express();
+// Create an instance of a Router
+const router = express.Router();
 // Specify the port to use for the server
 const port = 3000;
 
 // GET Route
-app.get('/', (req, res, next) => {
-	let products = repo.get(
-		function (data) {
+router.get('/', (req, res, next) => {
+    let products = repo.get(
+        function (data) {
 			// Code to execute when call is successful
 			res.json({
 				"status": 200,
@@ -27,7 +29,7 @@ app.get('/', (req, res, next) => {
 });
 
 // GET /search route
-app.get('/search', (req, res, next) => {
+router.get('/search', (req, res, next) => {
 	// Create search object with parameters from query line
 	let search = {
 		"name": req.query.name,
@@ -78,9 +80,8 @@ app.get('/search', (req, res, next) => {
 	}
 });
 
-
 // GET /id Route
-app.get('/:id', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
 	repo.getById(req.params.id, function (data) {
 		if (data) {
 			// Code to execute when call is successful
@@ -108,6 +109,8 @@ app.get('/:id', (req, res, next) => {
 	});
 });
 
+// Configure touer so all routes are prefixed with /api
+app.use('/api', router);
 // Create web server to listen on the specified port
 let server = app.listen(port, function () {
 	console.log(`NodeAPI server is running on http://localhost:${port}.`);
