@@ -18,3 +18,16 @@ repo.get = function (resolve, reject) {
 		}
 	});
 }
+
+repo.getById = function (id, resolve, reject) {
+	fs.readFile(DATA_FILE, function (err, data) {
+		if (err) {
+			reject(err);
+		}
+		else {
+			let products = JSON.parse(data);
+			let product = products.find(row => row.productID == id);
+			resolve(product);
+		}
+	});
+}
