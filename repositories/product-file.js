@@ -31,3 +31,28 @@ repo.getById = function (id, resolve, reject) {
 		}
 	});
 }
+
+repo.search = function (search, resolve, reject) {
+	if (search) {
+		fs.readFile(DATA_FILE, function (err, data) {
+			if (err) {
+				// ERROR: invoke reject()
+				reject(err);
+			}
+			else {
+				// SUCCESS: Convert data to JSON
+				let products = JSON.parse(data);
+				// Perform the search
+				products = products.filter(
+					row => (search.name ? row.name.toLowerCase().indexOf(
+						search.name.toLowerCase())
+						>= 0 : true) &&
+					(search.listPrice ? parseFloat(row.listPrice) > 
+						parseFloat(search.listPrice) : true));
+				// Invoke resolve() callback
+				// Empty array if no records match
+				resolve(products);
+			}
+		});
+	}
+}
