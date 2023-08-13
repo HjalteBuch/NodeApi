@@ -146,4 +146,28 @@ router.put('/:id', function (req, res, next) {
     });
 });
 
+router.delete('/:id', function (req, res, next) {
+    repo.getById(req.params.id, function (data) {
+        if (data) {
+            repo.delete(req.params.id, function (data) {
+                res.status(204).send();
+            });
+        }
+        else {
+            let msg = `The product '${req.params.id}' could not be found.`;
+            res.status(404).send({
+                "status": 404,
+                "statusText": "Not Found",
+                "message": msg,
+                "error": {
+                    "code": "NOT_FOUND",
+                    "message": msg
+                }
+            });
+        }
+    }, function(err) {
+        next(err);
+    });
+});
+
 module.exports = router;
