@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 // Create an instance of a Router
 const router = express.Router();
+app.use(express.json());
 // Specify the port to use for the server
 const port = 3000;
 

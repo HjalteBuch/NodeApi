@@ -56,3 +56,23 @@ repo.search = function (search, resolve, reject) {
 		});
 	}
 }
+
+repo.insert = function (newData, resolve, reject) {
+    fs.readFile(DATA_FILE, function(err, data) {
+        if (err) {
+            reject(err);
+        }
+        else {
+            let products = JSON.parse(data);
+            products.push(newData);
+            fs.writeFile(DATA_FILE, JSON.stringify(products), function (err) {
+                if (err) {
+                    reject(err)
+                }
+                else {
+                    resolve(newData);
+                }
+            });
+        }
+    });
+}

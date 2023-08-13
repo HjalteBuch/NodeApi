@@ -104,4 +104,16 @@ router.get('/:id', (req, res, next) => {
 	});
 });
 
+router.post('/', function (req, res, next) {
+    repo.insert(req.body, function(data) {
+        res.status(201).send({
+            "status": 201,
+            "statusText": "Created",
+            "message": "New Product Added.",
+            "data": data
+        });
+    }, function(err) {
+        next(err);
+    });
+});
 module.exports = router;
