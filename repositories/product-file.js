@@ -76,3 +76,26 @@ repo.insert = function (newData, resolve, reject) {
         }
     });
 }
+
+repo.update = function (changedData, id, resolve, reject) {
+    fs.readFile(DATA_FILE, function(err, data) {
+        if (err) {
+            reject(err);
+        }
+        else {
+            let products = JSON.parse(data);
+            let product = products.find(row => row.productID == id);
+            if (product) {
+                Object.assign(product, changedData);
+                fs.writeFile(DATA_FILE, JSON.stringify(products), function (err) {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(product);
+                    }
+                });
+            }
+        }
+    });
+}

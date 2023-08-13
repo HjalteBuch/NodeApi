@@ -116,4 +116,34 @@ router.post('/', function (req, res, next) {
         next(err);
     });
 });
+
+router.put('/:id', function (req, res, next) {
+    repo.getById(req.params.id, function (data) {
+        if (data) {
+            repo.update(req.body, req.params.id, function (data) {
+                res.send({
+                    "status": 200,
+                    "statusText": "OK",
+                    "message": `Product '${req.params.id} updated.`,
+                    "data": data
+                });
+            });
+        }
+        else {
+            let msg = `The product '${req.params.id}' could not be found.`;
+            res.status(404).send({
+                "status": 404,
+                "statusText": "Not Found",
+                "message": msg,
+                "error": {
+                    "code": "NOT_FOUND",
+                    "message": msg
+                }
+            });
+        }
+    }, function(err) {
+        next(err);
+    });
+});
+
 module.exports = router;
