@@ -1,14 +1,10 @@
-// Create an instance of a Router
 const router = require('express').Router();
 
-// Load product repository module
 const repo = require('../repositories/product-file');
 
-// GET Route
 router.get('/', (req, res, next) => {
     let products = repo.get(
         function (data) {
-			// Code to execute when call is successful
 			res.json({
 				"status": 200,
 				"statusText": "OK",
@@ -17,24 +13,19 @@ router.get('/', (req, res, next) => {
 			});
 		},
 		function (err) {
-			// Code to execute when an error occurs
 			next(err);
 		}
 	);
 });
 
-// GET /search route
 router.get('/search', (req, res, next) => {
-	// Create search object with parameters from query line
 	let search = {
 		"name": req.query.name,
 		"listPrice": req.query.listPrice
 	};
 	if (search.name || search.listPrice) {
 		repo.search(search, function (data) {
-			// Success: Data received
 			if (data && data.length >0) {
-				// Send array of products to caller
 				res.send({
 					"status": 200,
 					"statusText": "OK",
@@ -43,7 +34,6 @@ router.get('/search', (req, res, next) => {
 				});
 			}
 			else {
-				// No products matched the search
 				let msg = `The serach for '${JSON.stringify(search)} was not successful.`;
 				res.status(404).send({
 					"status": 404,
@@ -56,12 +46,10 @@ router.get('/search', (req, res, next) => {
 				});
 			}
 		}, function (err) {
-			// ERROR: pass error along to the 'next' middleware
 			next(err);
 		});
 	}
 	else {
-		// No search parameters passed
 		let msg = `No search parameters passed in.`;
 		res.status(400).send({
 			"status": 400,
@@ -75,11 +63,9 @@ router.get('/search', (req, res, next) => {
 	}
 });
 
-// GET /id Route
 router.get('/:id', (req, res, next) => {
 	repo.getById(req.params.id, function (data) {
 		if (data) {
-			// Code to execute when call is successful
 			res.send({
 				"status": 200,
 				"statusText": "OK",
