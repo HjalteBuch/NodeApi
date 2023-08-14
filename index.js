@@ -3,6 +3,7 @@ const app = express();
 const router = express.Router();
 app.use(express.json());
 
+process.env["NODE_ENV"] = "development";
 const config = require('config');
 const host = config.get('host');
 const prefix = config.get('prefix');

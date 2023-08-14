@@ -1,0 +1,5 @@
+{
+    "host": "http://production",
+    "port": 3300,
+    "prefix": "/prod"
+}
