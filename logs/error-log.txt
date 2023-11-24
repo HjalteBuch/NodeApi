@@ -1,0 +1,5 @@
+
+    ********************************************************************************
+    Date/Time: 2023-11-24T09:06:07.173Z
+    Exception Info: {"status":500,"statusText":"Internal Server Error","message":"ENOENT: no such file or directory, open './db/product-bad.json'","stack":"Error: ENOENT: no such file or directory, open './db/product-bad.json'","originalError":{"errno":-2,"code":"ENOENT","syscall":"open","path":"./db/product-bad.json"},"requestInfo":{"hostname":"localhost","path":"/api/product"}}
+    ******************************************************************************** 
