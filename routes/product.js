@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const repo = require('../repositories/product-file');
+const repo = require('../repositories/product-sqlServer');
 
 router.get('/', (req, res, next) => {
     let products = repo.get(
