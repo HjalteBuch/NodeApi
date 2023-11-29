@@ -15,4 +15,23 @@ let repo = {
     }
 }
 
+repo.getById = function (id, resolve, reject) {
+    let sql = `
+    SELECT *
+    FROM Product
+    WHERE ProductID = @ProductID`;
+
+    let params = [id];
+
+    db.submit(sql, params, function (data) {
+        if (data.length){
+            resolve(data);
+        } else {
+            resolve(undefined);
+        }
+    }, function (err) {
+        reject(err);
+    });
+}
+
 module.exports = repo;
