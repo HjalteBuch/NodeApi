@@ -1,5 +1,6 @@
 {
     "host": "http://localhost",
     "port": 3000,
-    "prefix": "/api"
+    "prefix": "/api",
+    "connectString": "/Users/hjalte/Projects/NodeApi/db/AdvWorksProducts.db"
 }
