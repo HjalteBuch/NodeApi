@@ -3,11 +3,11 @@ let db = require('../helpers/sqlserver');
 let repo = {
     get: function (resolve, reject) {
         let sql = `
-        SELECT productID, name, productNumber, color, standardCost, listPrice, modifiedDate
+        SELECT *
         FROM Product
-        Order BY name, listPrice`;
+        Order BY name, listPrice;`;
 
-        db.submit(sql, null, function (data) {
+        db.submit(sql, [], function (data) {
             resolve(data);
         }, function (err) {
             reject(err);
