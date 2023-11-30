@@ -39,23 +39,34 @@ repo.search = function (search, resolve, reject) {
     // Kind of janky, but I like it
     let sql = 'SELECT * FROM Product WHERE 1=1';
 
-    let params = [];
-
     if (search.name){
         sql += ` AND name LIKE "${search.name}%"`;
-        params.push(search.name);
     }
     if (search.listPrice){
         sql += ` AND listPrice >= ${search.listPrice}`;
-        params.push(search.listPrice);
     }
 
     db.submit(sql, [], function (data) {
-        if (data.length){
-            resolve(data);
-        } else {
-            resolve(undefined);
-        }
+        resolve(data);
+    }, function (err) {
+        reject(err);
+    });
+}
+
+repo.insert = function(products, resolve, reject) {
+    let sql = 'INSERT INTO Product (Name, ProductNumber, Color, StandardCost, ListPrice, ModifiedDate) VALUES ';
+
+    let date = new Date();
+    date = date.toISOString();
+    for (const p of products) {
+        let color = null;
+        if (p.color) {color = `"${p.color}"`};
+        sql += `("${p.name}", "${p.productNumber}", ${color}, ${p.standardCost}, ${p.listPrice}, "${date}"), `;
+    }
+    sql = sql.slice(0, -2);
+
+    db.submit(sql, [], function (data) {
+        resolve(products);
     }, function (err) {
         reject(err);
     });
