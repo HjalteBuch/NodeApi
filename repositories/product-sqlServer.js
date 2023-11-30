@@ -97,4 +97,14 @@ repo.update = function(changeData, id, resolve, reject) {
     });
 }
 
+repo.delete = function(id, resolve, reject) {
+    sql = `DELETE FROM Product WHERE ProductID = ${id};`;
+
+    db.submit(sql, [], function(data) {
+        resolve(1);
+    }, function(err) {
+        reject(err);
+    });
+}
+
 module.exports = repo;
