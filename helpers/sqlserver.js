@@ -13,8 +13,9 @@ db.submit = async function (sql, params, resolve, reject) {
         db.all(sql, params, (err, rows ) => {
             if (err) {
                 reject(err);
+            } else {
+                resolve(rows);
             }
-            resolve(rows);
         });
 
         db.close();

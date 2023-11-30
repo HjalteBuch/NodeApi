@@ -113,6 +113,8 @@ router.put('/:id', function (req, res, next) {
                     "message": `Product '${req.params.id} updated.`,
                     "data": data
                 });
+            }, function (err) {
+                next(err);
             });
         }
         else {

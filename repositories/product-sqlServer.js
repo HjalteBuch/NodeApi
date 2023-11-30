@@ -72,4 +72,26 @@ repo.insert = function(products, resolve, reject) {
     });
 }
 
+repo.update = function(changeData, id, resolve, reject) {
+    let keys = Object.keys(changeData);
+
+    sql = `UPDATE Product SET `;
+    for (const key of keys) {
+        if (key != "standardCost" || key != "listPrice") { 
+            sql += `${key} = "${changeData[key]}", `;
+        } else {
+            sql += `${key} = ${changeData[key]}, `;
+        }
+    }
+    sql = sql.slice(0, -2);
+    sql += ` WHERE ProductID = ${id};`;
+    sql += `SELECT * FROM Product WHERE ProductID = ${id};`;
+
+    db.submit(sql, [], function (data) {
+        resolve(data);
+    }, function (err) {
+        reject(err);
+    });
+}
+
 module.exports = repo;
