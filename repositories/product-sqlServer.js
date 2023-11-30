@@ -85,10 +85,13 @@ repo.update = function(changeData, id, resolve, reject) {
     }
     sql = sql.slice(0, -2);
     sql += ` WHERE ProductID = ${id};`;
-    sql += `SELECT * FROM Product WHERE ProductID = ${id};`;
 
-    db.submit(sql, [], function (data) {
-        resolve(data);
+    db.submit(sql, [], function (empty) {
+        repo.getById(id, function(data) {
+            resolve(data);
+        }, function(getErr){
+            resolve(empty);
+        });
     }, function (err) {
         reject(err);
     });
