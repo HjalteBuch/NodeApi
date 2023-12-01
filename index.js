@@ -9,6 +9,8 @@ const prefix = config.get('prefix');
 const port = config.get('port');
 
 const errorHelper = require('./helpers/error');
+const corsHelper = require('./helpers/cors');
+corsHelper.configure(app);
 
 router.use('/product', require('./routes/product'));
 
